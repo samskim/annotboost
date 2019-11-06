@@ -1,4 +1,4 @@
-# annotboost
+# AnnotBoost
 Kim et al. "Improving the informativeness of Mendelian disease pathogenicity scores for common diseases and complex traits" biorxiv 2019.
 
 Annotations available at https://data.broadinstitute.org/alkesgroup/LDSCORE/Kim_annotboost/
