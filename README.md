@@ -18,7 +18,7 @@ File formats:
 scores: probabilstic scores from 0 to 1
 annotations: binary annotation based on top X% of the scores (download at https://data.broadinstitute.org/alkesgroup/LDSCORE/Kim_annotboost/)
  - annotation format:
-    .annot: thin-annot version is used (one column ANNOT)
-    .ldscore.gz: CHR, SNP, BP, L2 (delimiter = '\t')
+    - annot: thin-annot version is used (one column ANNOT)
+    - ldscore.gz: CHR, SNP, BP, L2 (delimiter = '\t')
 
 For other details including processing pathogenicity scores, please read the manuscript.
