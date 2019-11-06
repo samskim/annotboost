@@ -5,7 +5,7 @@ Annotations available at https://data.broadinstitute.org/alkesgroup/LDSCORE/Kim_
 
 data: 4 SNP sets (GWAS significant SNPs, Farh et al. fine-mapped SNPs, Weissbrod et al. fine-mapped SNPs, and de novo SNPs); these SNPs are restricted to 9,997,231 SNPs (MAF >= 0.5%) found in the reference panel (1000 Genomes Phase 3 EUR). 
 
-model: pretrained models for 82 scores after appyling AnnotBoost to odd/even choromosomes. Load the model to see training parameters used by XGBoost; parameters were optimized with two-fold cross validation.
+model: pretrained models for 82 scores after appyling AnnotBoost to odd/even choromosomes. Load the model to see training parameters used by XGBoost; parameters were optimized with two-fold cross validation (while avoiding over-fitting).
 
 scores: summarized published and boosted scores for 86 baseline-LD annotations + 35 published scores + 82 boosted scores (corresponding to 35 boosted published scores + 47 boosted baseline-LD scores). columns: Y1, Y2, Y3, Y4 corresponds to labels for 4 SNP sets (Y1: GWAS, Y2: Farh et al., Y3: Weissbrod et al., Y4: De novo SNPs).
 
