@@ -21,3 +21,4 @@ Background: pathogenicity scores are instrumental in prioritizing variants for M
  - Better understanding disease heritability via functional components of heritability suggests the application in functionally-informed fine-mapping. We further demonstrated the these new annotations improve the heritability model fit, quantified by loglss (scripts to run SumHer to compute loglss is included in above URL as well). 
 
 For other details including processing pathogenicity scores, please read the manuscript.
+All source codes distributed under the MIT license.
