@@ -16,7 +16,6 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import shap #install shap: https://github.com/slundberg/shap 
-#from xgboost.sklearn import XGBClassifier
 
 #Python version: v.3.6.10 used. 
 
@@ -135,11 +134,14 @@ def fit_model(x_train,y_train,n_iter=10,cv=5):
     return xgb_hyper.best_estimator_ #return the best model based on scoring=roc_auc
 
 #make predictions, ROC/PR curve plot
-def test_model(xgb_mod,x_test,y_test):
-    predictions = xgb_mod.predict_proba(x_test)[:,1]
+def test_model(xgb_mod,x_test,y_test,df):
+    predictions_all = xgb_mod.predict_proba(x_test)[:,1]
+    df = df[df.Y != -1] #for ROC/PR curves, use only labeled SNPs
+    predictions = xgb_mod.predict_proba(df[features].values)[:,1]
+    y_test = df["Y"].values
     ROC_curve(predictions,y_test)
     PR_curve(predictions,y_test) 
-    return predictions
+    return predictions_all
    
 #plot ROC curve 
 #y_pred is the probabilistic score after applying AnnotBoost
@@ -294,9 +296,9 @@ def main(args):
         all_df_even = all_df[all_df.CHR % 2 == 0]
         all_df_odd = all_df[all_df.CHR % 2 == 1]
         print("applying even chr model on odd chr SNPs!")
-        odd_predicted = test_model(xgb_even, all_df_odd[features].values, all_df_odd["Y"].values)
+        odd_predicted = test_model(xgb_even, all_df_odd[features].values, all_df_odd["Y"].values, all_df_odd)
         print("applying odd chr model on even chr SNPs!")
-        even_predicted = test_model(xgb_odd, all_df_even[features].values, all_df_even["Y"].values)
+        even_predicted = test_model(xgb_odd, all_df_even[features].values, all_df_even["Y"].values, all_df_even)
 		all_df_odd["Boosted SCORE"] = odd_predicted
 		all_df_even["Boosted SCORE"] = even_predicted
 		all = all_df_odd.append(all_df_even)
@@ -309,7 +311,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode',type=str,default='training') #training, applying, makeannot (in this order)
-    parser.add_argument('--basedir',type=str,default='/n/groups/price/sam/tier2/sam/annotboost_upload/annotboost/AnnotBoost_sourcecode/reference_files_demo/reference_files')
+    parser.add_argument('--basedir',type=str,default='./annotboost/')
     parser.add_argument('--published_score_filename',type=str,default='CADD_input.csv.gz')
     parser.add_argument('--debug',type=str,default='F') #'T' if want to check if there's any issue by using 1000 SNP samples
     args = parser.parse_args()
