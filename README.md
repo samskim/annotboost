@@ -10,7 +10,7 @@ Input pathogenicity scores, boosted scores, and binarized annotations available 
 S-LDSC / meta-analysis scripts were previously published on https://github.com/samskim/networkconnectivity 
 
 AnnotBoost framework (see the demo: AnnotBoost_demo.ipynb):
-- Input: .csv.gz file for containing variant scores (formatted with columns = ['CHR', 'BP', 'REF', 'ALT', 'SCORE']. For all our analysis, SNP set is 9,997,231 SNPs with MAF >= 0.5% in 1000G EUR Phase3 referene panel.)
+- Input: .csv.gz file for containing variant scores (formatted with columns = ['CHR', 'BP', 'REF', 'ALT', 'SCORE']. For all our analysis, SNP set is 9,997,231 SNPs with MAF >= 0.5% in 1000G EUR Phase3 referene panel; see the example input file format in AnnotBoost_examplefiles.ipynb)
 - Output: .csv.gz file for boosted variant scores, cPickle model file, SHAP feature importance 
 - Computational time, memory required: (while it varies on how many iterations for parameter tuning), time for training is <12 hours with ~10GB memory. For missense variant scores where only 0.3% of the genome is scored, training is significantly faster.
 - Python 3.X version is suggested to be used. 
