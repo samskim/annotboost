@@ -134,19 +134,19 @@ def fit_model(x_train,y_train,n_iter=10,cv=5):
     return xgb_hyper.best_estimator_ #return the best model based on scoring=roc_auc
 
 #make predictions, ROC/PR curve plot
-def test_model(xgb_mod,x_test,y_test,df):
+def test_model(xgb_mod,x_test,y_test,df,evenodd):
     predictions_all = xgb_mod.predict_proba(x_test)[:,1]
     df = df[df.Y != -1] #for ROC/PR curves, use only labeled SNPs
     predictions = xgb_mod.predict_proba(df[features].values)[:,1]
     y_test = df["Y"].values
-    ROC_curve(predictions,y_test)
-    PR_curve(predictions,y_test) 
+    ROC_curve(predictions,y_test, evenodd)
+    PR_curve(predictions,y_test, evenodd) 
     return predictions_all
    
 #plot ROC curve 
 #y_pred is the probabilistic score after applying AnnotBoost
 #y_test is binarized label used in the training
-def ROC_curve(y_pred, y_test):
+def ROC_curve(y_pred, y_test, evenodd):
     tilte = "ROC curve"
     label = "baseline-LD features"
     y = np.asarray(y_test).reshape((len(y_test),1))
@@ -157,14 +157,14 @@ def ROC_curve(y_pred, y_test):
     plt.legend(loc='lower right')
     plt.xlabel('1 - Specificity')
     plt.ylabel('Sensitivity')
-    plt.savefig('%s/ROC_CURVE_%s.png' %(args.basedir, args.published_score_filename))
+    plt.savefig('%s/ROC_CURVE_%s_%s.png' %(args.basedir, args.published_score_filename, evenodd))
     plt.close()
     return
 
 #plot PR curve
 #y_pred is the probabilistic score after applying AnnotBoost
 #y_test is binarized label used in the training
-def PR_curve(y_pred, y_test):
+def PR_curve(y_pred, y_test, evenodd):
     tilte = "PR curve"
     label = "baseline-LD features"
     y = np.asarray(y_test).reshape((len(y_test),1))
@@ -175,7 +175,7 @@ def PR_curve(y_pred, y_test):
     plt.legend(loc='lower left')
     plt.xlabel('Recall')
     plt.ylabel('Precision')
-    plt.savefig('%s/PR_CURVE_%s.png' %(args.basedir, args.published_score_filename))
+    plt.savefig('%s/PR_CURVE_%s_%s.png' %(args.basedir, args.published_score_filename, evenodd))
     plt.close()
     return
 
@@ -296,9 +296,9 @@ def main(args):
         all_df_even = all_df[all_df.CHR % 2 == 0]
         all_df_odd = all_df[all_df.CHR % 2 == 1]
         print("applying even chr model on odd chr SNPs!")
-        odd_predicted = test_model(xgb_even, all_df_odd[features].values, all_df_odd["Y"].values, all_df_odd)
+        odd_predicted = test_model(xgb_even, all_df_odd[features].values, all_df_odd["Y"].values, all_df_odd, "even")
         print("applying odd chr model on even chr SNPs!")
-        even_predicted = test_model(xgb_odd, all_df_even[features].values, all_df_even["Y"].values, all_df_even)
+        even_predicted = test_model(xgb_odd, all_df_even[features].values, all_df_even["Y"].values, all_df_even, "odd")
 		all_df_odd["Boosted SCORE"] = odd_predicted
 		all_df_even["Boosted SCORE"] = even_predicted
 		all = all_df_odd.append(all_df_even)
