@@ -1,6 +1,7 @@
 # AnnotBoost
 Kim et al. "Improving the informativeness of Mendelian disease pathogenicity scores for common diseases and complex traits" Nature Communications 2020
  - Paper link: https://www.nature.com/articles/s41467-020-20087-2#Abs1
+
 First, download neceesary files: "wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/Kim_annotboost/annotboost.tar.gz"
 
 Input pathogenicity scores, boosted scores, and binarized annotations available at https://alkesgroup.broadinstitute.org/LDSCORE/Kim_annotboost/
