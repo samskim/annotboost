@@ -3,6 +3,8 @@ Kim et al. "Improving the informativeness of Mendelian disease pathogenicity sco
  - Paper link: https://www.nature.com/articles/s41467-020-20087-2#Abs1
 
 First, download neceesary files: "wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/Kim_annotboost/annotboost.tar.gz"
+The feature files can be found in "wget https://storage.googleapis.com/broad-alkesgroup-public/LDSCORE/Kim_annotboost/baselineLD_allchr.annot.gz"
+ - Because the baseline-LD features are evolvinvg, pleaes update the 'features = ['Coding_UCSC', 'Coding_UCS...] line in the annotboost source code with the column names of the baselineLD_allchr.annot.gz files, after excluding CHR, BP, SNP, CM, base columns. This is the baseline-LD v.2.2. features.
 
 Input pathogenicity scores, boosted scores, and binarized annotations available at https://alkesgroup.broadinstitute.org/LDSCORE/Kim_annotboost/
  - summarized published and boosted scores for 86 baseline-LD annotations + 35 published scores + 82 boosted scores (corresponding to 35 boosted published scores + 47 boosted baseline-LD scores). 
